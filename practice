@@ -1,0 +1,40 @@
+//a function to find a nested object within an array OR an object
+function find(something, criteriaFn) {
+    let current = something
+    let next = [];
+    while (current) {
+        if (criteriaFn(current)) {
+            return current;
+        }
+        if (Array.isArray(current)) {
+            for (let i = 0; i < current.length; i++) {
+                next.push(current[i]);
+            }
+        }
+        if (typeof current === "object") {
+            for (var values in current) {
+                current[values];
+                next.push(current[values]);
+            }
+        }
+        current = next.shift();
+    }
+    return null;
+}
+
+const collections = [1, [2, [4, [5, [6]], 3]]];
+
+find(collections, n => (typeof n === 'number' && n > 5));
+//6
+
+const familyAges = {
+     dad: 42,
+     mom: 38,
+     Lucy: 16,
+     Oscar: 13
+     pets: [3, 5, 7]
+};
+
+find(familyAges, n => (typeof n === 'number' && n < 4));
+//3
+
